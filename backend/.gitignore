@@ -6,8 +6,9 @@ dist/
 wheels/
 *.egg-info
 
-# venv
+# env
 .venv
+.env
 
 #rye_creates
 .python-version
