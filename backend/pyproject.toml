@@ -5,7 +5,9 @@ description = "Add your description here"
 authors = [
     { name = "Takemoto-Tomohiro", email = "s2322039@stu.musashino-u.ac.jp" }
 ]
-dependencies = []
+dependencies = [
+    "fastapi>=0.111.1",
+]
 readme = "README.md"
 requires-python = ">= 3.12"
 
