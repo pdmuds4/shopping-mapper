@@ -1,4 +1,4 @@
-import { Box, TextField, TextFieldProps } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 import { styled } from "@mui/system";
 
 const CustomMuiTextField = styled(TextField)({
@@ -26,13 +26,16 @@ const CustomMuiTextField = styled(TextField)({
     '& label.Mui-focused': {
         color: 'white',
     },
+    '& p': {
+        fontSize: '15px',
+    },
 })
 
 const CustomInput: React.FC<TextFieldProps> = (props) => {
     return (
-        <Box textAlign='center'>
+        <>
             <CustomMuiTextField {...props} />
-        </Box>
+        </>
     )
 }
 
