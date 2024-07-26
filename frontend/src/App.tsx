@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { Home, Login } from './routes';
 
+import './global.css';
+
 const App: React.FC = () => {
   return (
     <>
