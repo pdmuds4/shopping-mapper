@@ -19,7 +19,7 @@ class SupabaseManager:
         await self.initialize()
         return self
 
-    async def __aexit__(self, exc_type, exc_value, traceback) -> False|None:
+    async def __aexit__(self, exc_type, exc_value, traceback) -> any:
         await self.close_client()
         if exc_type:
             logger.error(f"At {__name__}: {exc_type.__name__}: {exc_value}")
