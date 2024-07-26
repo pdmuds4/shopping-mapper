@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Home, Login } from './routes';
+import { Home, Login, Register } from './routes';
 
 import './global.css';
 
@@ -9,6 +9,7 @@ const App: React.FC = () => {
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register"  element={<Register />}/>
       </Routes>
     </>
   )

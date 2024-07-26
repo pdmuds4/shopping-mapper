@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Stack, Link, Box } from '@mui/material'
-import LoginInput from './LoginInput'
-import LoginButton from './LoginButton'
+import { CustomInput, CustomButton } from '@components/ui'
 
 
 const LoginForm: React.FC = () => {
@@ -9,21 +8,21 @@ const LoginForm: React.FC = () => {
 
     return (
         <Stack spacing={4}>
-            <LoginInput 
+            <CustomInput 
                 label="Eメールアドレス" 
                 type='email'
                 onChange={(e)=>setLoginInVal({...loginInVal, email: e.target.value})}
             />
-            <LoginInput
+            <CustomInput
                 label="パスワード"
                 type='password'
                 onChange={(e)=>setLoginInVal({...loginInVal, password: e.target.value})}
             />
-            <LoginButton
+            <CustomButton
                 // [TODO]: APIにログイン情報を送信する処理を追加
                 onClick = {()=>console.log(loginInVal)}
                 disabled={loginInVal.email === '' || loginInVal.password === ''}
-            >ログイン</LoginButton>
+            >ログイン</CustomButton>
             <Box textAlign='center'>
                 <Link 
                     href='/register' 

@@ -28,7 +28,7 @@ const CustomMuiTextField = styled(TextField)({
     },
 })
 
-const LoginInput: React.FC<TextFieldProps> = (props) => {
+const CustomInput: React.FC<TextFieldProps> = (props) => {
     return (
         <Box textAlign='center'>
             <CustomMuiTextField {...props} />
@@ -36,4 +36,4 @@ const LoginInput: React.FC<TextFieldProps> = (props) => {
     )
 }
 
-export default LoginInput;
+export default CustomInput;

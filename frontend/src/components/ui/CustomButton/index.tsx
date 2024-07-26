@@ -1,4 +1,4 @@
-import { Button, Box, ButtonProps } from '@mui/material'
+import { Button, ButtonProps } from '@mui/material'
 import { styled } from "@mui/system";
 
 const CustomMuiButton = styled(Button)({
@@ -11,12 +11,12 @@ const CustomMuiButton = styled(Button)({
     },
 });
 
-const LoginButton: React.FC<ButtonProps> = (props) => {
+const CustomButton: React.FC<ButtonProps> = (props) => {
     return (
-        <Box textAlign='center'>
+        <>
             <CustomMuiButton {...props}>{props.children}</CustomMuiButton>
-        </Box>
+        </>
     )
 }
 
-export default LoginButton;
+export default CustomButton;
