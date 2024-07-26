@@ -19,10 +19,11 @@ class SupabaseManager:
         await self.initialize()
         return self
 
-    async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+    async def __aexit__(self, exc_type, exc_value, traceback) -> False|None:
         await self.close_client()
         if exc_type:
-            logger.error(f"An error occurred: {exc_type.__name__}: {exc_value}")
+            logger.error(f"At {__name__}: {exc_type.__name__}: {exc_value}")
+            return False
 
     def _get_env_variable(self, key: str) -> str:
         value = os.getenv(key)
