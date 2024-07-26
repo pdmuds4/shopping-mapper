@@ -10,7 +10,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@domain/*": ["src/domain/*"],
+      "@domain/*": ["src/models/*"],
       "@components/*" : ["src/components/*"],
       "@usecase": ["src/service"],
       "@utils" : ["src/utils"],
