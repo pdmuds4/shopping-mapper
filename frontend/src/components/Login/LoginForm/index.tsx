@@ -8,21 +8,27 @@ const LoginForm: React.FC = () => {
 
     return (
         <Stack spacing={4}>
-            <CustomInput 
-                label="Eメールアドレス" 
-                type='email'
-                onChange={(e)=>setLoginInVal({...loginInVal, email: e.target.value})}
-            />
-            <CustomInput
-                label="パスワード"
-                type='password'
-                onChange={(e)=>setLoginInVal({...loginInVal, password: e.target.value})}
-            />
-            <CustomButton
-                // [TODO]: APIにログイン情報を送信する処理を追加
-                onClick = {()=>console.log(loginInVal)}
-                disabled={loginInVal.email === '' || loginInVal.password === ''}
-            >ログイン</CustomButton>
+            <Box textAlign='center'>
+                <CustomInput 
+                    label="Eメールアドレス" 
+                    type='email'
+                    onChange={(e)=>setLoginInVal({...loginInVal, email: e.target.value})}
+                />
+            </Box>
+            <Box textAlign='center'>
+                <CustomInput
+                    label="パスワード"
+                    type='password'
+                    onChange={(e)=>setLoginInVal({...loginInVal, password: e.target.value})}
+                />
+            </Box>
+            <Box textAlign='center'>
+                <CustomButton
+                    // [TODO]: APIにログイン情報を送信する処理を追加
+                    onClick = {()=>console.log(loginInVal)}
+                    disabled={loginInVal.email === '' || loginInVal.password === ''}
+                >ログイン</CustomButton>
+            </Box>
             <Box textAlign='center'>
                 <Link 
                     href='/register' 
