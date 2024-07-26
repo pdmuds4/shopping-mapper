@@ -8,13 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "noEmit": true,
-    "baseUrl": ".",
-    "paths": {
-      "@domain/*": ["src/models/*"],
-      "@components/*" : ["src/components/*"],
-      "@usecase": ["src/service"],
-      "@utils" : ["src/utils"],
-    }
   },
   "include": ["vite.config.ts"]
 }
