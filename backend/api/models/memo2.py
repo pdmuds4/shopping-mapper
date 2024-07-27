@@ -1,8 +1,17 @@
 from . import supabase_client
 from supabase import PostgrestAPIError
 from fastapi import HTTPException
+from pydantic import BaseModel
+from typing import List, Optional
 
-async def getNotDoneMemo(user_id: str):
+class Memo(BaseModel):
+    id: int
+    created_at: Optional[str]
+    user_id: int
+    title: str
+    done: bool
+
+async def getNotDoneMemo(user_id: str) -> List[Memo]:
     """
     未完了のメモを取得する。ユーザーごとに一つしか未完了メモは持てないことを前提とする
     """
@@ -12,11 +21,11 @@ async def getNotDoneMemo(user_id: str):
             resp = await client.table("memo").select("*").eq("user_id", user_id).eq("done", False).execute()
             if not resp.data:
                 raise HTTPException(status_code=404, detail={"message": "未完了のメモが存在していないっぽい…？"})
-            return resp.data
+            return [Memo(**memo) for memo in resp.data]
     except PostgrestAPIError as e:
         raise HTTPException(status_code=500, detail={"message": "データベースエラーが発生しました。", "error": str(e)})
-    
-async def getDoneMemo(user_id: str):
+
+async def getDoneMemo(user_id: str) -> List[Memo]:
     """
     完了済みのメモを取得する。ユーザーごとに複数の完了済みメモを持つことができる。
     """
@@ -26,11 +35,11 @@ async def getDoneMemo(user_id: str):
             resp = await client.table("memo").select("*").eq("user_id", user_id).eq("done", True).execute()
             if not resp.data:
                 raise HTTPException(status_code=404, detail={"message": "完了済みのメモが存在していないっぽい…？"})
-            return resp.data
+            return [Memo(**memo) for memo in resp.data]
     except PostgrestAPIError as e:
         raise HTTPException(status_code=500, detail={"message": "データベースエラーが発生しました。", "error": str(e)})
 
-async def createNewMemo(user_id: int, title: str):
+async def createNewMemo(user_id: int, title: str) -> Memo:
     """
     新たなメモを作成する。
     """
@@ -49,11 +58,11 @@ async def createNewMemo(user_id: int, title: str):
                 "done": False
             }
             resp = await client.table("memo").insert(new_memo).execute()
-            return resp.data
+            return Memo(**resp.data[0])
     except PostgrestAPIError as e:
         raise HTTPException(status_code=500, detail={"message": "データベースエラーが発生しました。", "error": str(e)})
-    
-async def dropMemo(memo_id: int):
+
+async def dropMemo(memo_id: int) -> dict:
     """
     指定されたメモを削除する。
     """
@@ -67,13 +76,13 @@ async def dropMemo(memo_id: int):
             
             # メモを削除
             resp = await client.table("memo").delete().eq("id", memo_id).execute()
-            if resp.status_code != 200:
+            if not resp.data:
                 raise HTTPException(status_code=500, detail={"message": "メモの削除に失敗しました。"})
             return {"message": "メモが削除されました。"}
     except PostgrestAPIError as e:
         raise HTTPException(status_code=500, detail={"message": "データベースエラーが発生しました。", "error": str(e)})
-    
-async def markUpMemo(memo_id: int):
+
+async def markUpMemo(memo_id: int) -> dict:
     """
     メモを完了とする。ただし、関連された未購入の商品がある場合は弾く
     """
@@ -81,19 +90,19 @@ async def markUpMemo(memo_id: int):
         async with supabase_client.SupabaseManager() as sbm:
             client = await sbm.get_client()
             # 未購入の商品が存在するか確認
-            product_resp = await client.table("product").select("id").eq("memo_id", memo_id).eq("purchased", False).execute()
+            product_resp = await client.table("product").select("id").eq("memo_id", memo_id).eq("is_done", False).execute()
             if product_resp.data:
                 raise HTTPException(status_code=400, detail={"message": "未購入の商品が存在します。メモを完了できません。"})
             
             # メモを完了にマーク
             resp = await client.table("memo").update({"done": True}).eq("id", memo_id).execute()
-            if resp.status_code != 200:
+            if not resp.data:
                 raise HTTPException(status_code=500, detail={"message": "メモの完了に失敗しました。"})
             return {"message": "メモが完了としてマークされました。"}
     except PostgrestAPIError as e:
         raise HTTPException(status_code=500, detail={"message": "データベースエラーが発生しました。", "error": str(e)})
-    
-async def markDownMemo(memo_id: int):
+
+async def markDownMemo(memo_id: int) -> dict:
     """
     メモを未完了に書き換える。ただしすでに未完了のメモがある場合は弾く
     """
@@ -107,7 +116,7 @@ async def markDownMemo(memo_id: int):
             
             # メモを未完了にマーク
             resp = await client.table("memo").update({"done": False}).eq("id", memo_id).execute()
-            if resp.status_code != 200:
+            if not resp.data:
                 raise HTTPException(status_code=500, detail={"message": "メモの未完了への書き換えに失敗しました。"})
             return {"message": "メモが未完了としてマークされました。"}
     except PostgrestAPIError as e:
