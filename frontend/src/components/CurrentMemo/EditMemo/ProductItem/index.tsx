@@ -1,4 +1,4 @@
-import { IconButton, ListItem, Grid, InputAdornment, Tooltip } from '@mui/material';
+import { IconButton, ListItem, Tooltip } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { CustomInput } from '@components/ui';
 
@@ -21,30 +21,12 @@ const ProductItem: React.FC = () => {
                 </Tooltip>
             }
         >   
-            <Grid container>
-                <Grid item xs={6}>
-                    <CustomInput 
-                        // defaultValue={}
-                        label='商品名'
-                        type='text'
-                        basecolor='gray' 
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <CustomInput 
-                        // defaultValue={}
-                        label='価格'
-                        type='number'
-                        basecolor='gray'
-                        InputProps={{
-                            startAdornment: 
-                                <InputAdornment position="start">
-                                    ￥
-                                </InputAdornment>,
-                        }}
-                    />
-                </Grid>
-            </Grid>
+            <CustomInput 
+                // defaultValue={}
+                label='商品名'
+                type='text'
+                basecolor='gray' 
+            />
         </ListItem>
     )
 }
