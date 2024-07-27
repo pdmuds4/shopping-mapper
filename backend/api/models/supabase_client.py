@@ -12,17 +12,18 @@ logger = structlog.get_logger()
 class SupabaseManager:
     def __init__(self) -> None:
         self.__url: str = self._get_env_variable("SUPABASE_URL")
-        self.__api_key: str = self._get_env_variable("SUPABASE_KEY")
+        self.__api_key: str = self._get_env_variable("SUPABASE_API_KEY")
         self._client: Optional[AClient] = None
 
     async def __aenter__(self) -> 'SupabaseManager':
         await self.initialize()
         return self
 
-    async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+    async def __aexit__(self, exc_type, exc_value, traceback) -> any:
         await self.close_client()
         if exc_type:
-            logger.error(f"An error occurred: {exc_type.__name__}: {exc_value}")
+            logger.error(f"At {__name__}: {exc_type.__name__}: {exc_value}")
+            return False
 
     def _get_env_variable(self, key: str) -> str:
         value = os.getenv(key)
@@ -69,7 +70,7 @@ async def main():
             client = await manager.get_client()
             # クライアントを使用した操作
             users = await client.table("user").select("*").execute()
-            logger.info(f"Retrieved {len(users.data)} users")
+            logger.info(users)
     except Exception as e:
         logger.error("An error occurred", error=str(e))
 

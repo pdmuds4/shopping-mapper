@@ -15,3 +15,6 @@ wheels/
 #pyproject.toml
 requirements-dev.lock
 requirements.lock
+
+#test
+test/
