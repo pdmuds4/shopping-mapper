@@ -36,10 +36,10 @@ const RegisterForm: React.FC = () => {
             </Box>
             <Box textAlign='center'>
                 <CustomButton
-                    // [TODO]: APIにログイン情報を送信する処理を追加
+                    // [TODO]: APIにアカウント登録情報を送信する処理を追加
                     onClick = {()=>console.log(registerInVal)}
                     disabled={registerInVal.email === '' || registerInVal.password === ''}
-                >ログイン</CustomButton>
+                >アカウント登録</CustomButton>
             </Box>
             <Box textAlign='center'>
                 <Link 
