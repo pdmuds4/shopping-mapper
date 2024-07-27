@@ -34,7 +34,7 @@ const LoginForm: React.FC = () => {
                     href='/register' 
                     underline="hover" 
                     sx={{color: 'white'}}
-                >パスワードをお忘れの方はこちら</Link>
+                >アカウントをお持ちでない方はこちら</Link>
             </Box>
         </Stack>
     )
