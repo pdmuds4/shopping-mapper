@@ -16,6 +16,7 @@ const RegisterForm: React.FC = () => {
                 <CustomInput 
                     label="Eメールアドレス" 
                     type='email'
+                    basecolor='white'
                     onChange={(e)=>setRegisterInVal({...registerInVal, email: e.target.value})}
                 />
             </Box>
@@ -23,6 +24,7 @@ const RegisterForm: React.FC = () => {
                 <CustomInput 
                     label="Eメールアドレス(再確認)" 
                     type='email'
+                    basecolor='white'
                     onChange={(e)=>setRegisterInVal({...registerInVal, second_email: e.target.value})}
                     error={registerInVal.email !== registerInVal.second_email}
                     helperText={registerInVal.email !== registerInVal.second_email ? 'メールアドレスが一致しません' : ''}
@@ -31,6 +33,8 @@ const RegisterForm: React.FC = () => {
             <Box textAlign='center'>
                 <CustomInput
                     label="パスワードを設定"
+                    type="text"
+                    basecolor='white'
                     onChange={(e)=>setRegisterInVal({...registerInVal, password: e.target.value})}
                 />
             </Box>
