@@ -3,9 +3,11 @@ import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText
 import { Article, Restore, Logout } from '@mui/icons-material'
 import { s__homeDrawerLayout, s__homeDrawerTopBody, s__homeDrawerBottomBody, s__homeDrawerIcon, s__homeDrawerText } from './style';
 
+import CurrentMemo from '@routes/_CurrentMemo';
+
 const HomeDrawer: React.FC<{
     onSetMainContent: (content: JSX.Element) => void;
-}> = (/*props*/) => {
+}> = (props) => {
     const navigate = useNavigate();
 
     // [TODO]: props.onSetMainContent()を使ってmain contentを変更する
@@ -13,7 +15,7 @@ const HomeDrawer: React.FC<{
         {
             text: '作成中のメモ',
             icon: <Article />,
-            onclick: () => console.log('main content is 作成中のメモ')// props.setMainContent()
+            onclick: () => props.onSetMainContent(<CurrentMemo />)
         },
         {
             text: 'メモ履歴',

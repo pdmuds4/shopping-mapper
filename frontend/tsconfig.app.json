@@ -11,6 +11,7 @@
     "paths": {
       "@domain/*": ["src/models/*"],
       "@components/*" : ["src/components/*"],
+      "@routes/*" : ["src/routes/*"],
       "@usecase": ["src/service"],
       "@utils" : ["src/utils"],
     },

@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { Box, Toolbar } from '@mui/material'
 import { HomeAppBar, HomeDrawer } from '@components/Home';
 
+import CurrentMemo from '@routes/_CurrentMemo';
+
 const Home: React.FC = () => {
-    const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
+    const [mainContent, setMainContent] = useState<JSX.Element>(<CurrentMemo />);
 
     return (
         <Box sx={{ display: 'flex' }}>

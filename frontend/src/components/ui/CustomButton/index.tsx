@@ -6,15 +6,19 @@ const CustomMuiButton = styled(Button)({
     color: 'white',
     fontSize: '30px',
     boxShadow: '3px 3px 3px 3px rgba(0, 0, 0, 0.3)',
+    backgroundImage: 'linear-gradient(135deg, #ec8434, #fda085)',
     '&:disabled': {
-        backgroundColor: 'rgba(185, 185, 185, 0.3)',
+        backgroundImage: 'none',
+        backgroundColor: 'rgba(199, 199, 199, 0.3)',
     },
 });
 
 const CustomButton: React.FC<ButtonProps> = (props) => {
     return (
         <>
-            <CustomMuiButton {...props}>{props.children}</CustomMuiButton>
+            <CustomMuiButton {...props}>
+                {props.children}
+            </CustomMuiButton>
         </>
     )
 }

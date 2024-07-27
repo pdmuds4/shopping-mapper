@@ -1,40 +1,45 @@
 import { TextField, TextFieldProps } from "@mui/material";
 import { styled } from "@mui/system";
 
-const CustomMuiTextField = styled(TextField)({
-    width: '80%',
-    '& label': {
-        color: 'white',
-        fontSize: '20px'
-    },
-    '& .MuiOutlinedInput-root': {
-        color: 'white',
-        '& input[type="password"]' : {
-            fontFamily: 'monospace',
+const CustomMuiTextField = styled(TextField)(
+    (props: {
+        basecolor: string
+    }) => ({
+        width: '80%',
+        '& label': {
+            color: props.basecolor,
+            fontSize: '20px'
         },
-        '& fieldset': {
-            border: '2px solid white',
-            borderColor: 'white',
+        '& .MuiOutlinedInput-root': {
+            color: props.basecolor,
+            '& input[type="password"]' : {
+                fontFamily: 'monospace',
+            },
+            '& fieldset': {
+                border: `2px solid ${props.basecolor}`,
+                borderColor: props.basecolor,
+            },
+            '&:hover fieldset': {
+                borderColor: props.basecolor,
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: props.basecolor,
+            },
         },
-        '&:hover fieldset': {
-            borderColor: 'white',
+        '& label.Mui-focused': {
+            color: props.basecolor,
         },
-        '&.Mui-focused fieldset': {
-            borderColor: 'white',
+        '& p': {
+            fontSize: '15px',
         },
-    },
-    '& label.Mui-focused': {
-        color: 'white',
-    },
-    '& p': {
-        fontSize: '15px',
-    },
-})
+}))
 
-const CustomInput: React.FC<TextFieldProps> = (props) => {
+const CustomInput: React.FC<TextFieldProps & {
+    basecolor: string
+}> = (props) => {
     return (
         <>
-            <CustomMuiTextField {...props} />
+            <CustomMuiTextField {...props} basecolor={props.basecolor} />
         </>
     )
 }
