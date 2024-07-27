@@ -12,6 +12,7 @@ const LoginForm: React.FC = () => {
                 <CustomInput 
                     label="Eメールアドレス" 
                     type='email'
+                    basecolor='white'
                     onChange={(e)=>setLoginInVal({...loginInVal, email: e.target.value})}
                 />
             </Box>
@@ -19,6 +20,7 @@ const LoginForm: React.FC = () => {
                 <CustomInput
                     label="パスワード"
                     type='password'
+                    basecolor='white'
                     onChange={(e)=>setLoginInVal({...loginInVal, password: e.target.value})}
                 />
             </Box>
