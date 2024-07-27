@@ -27,9 +27,9 @@ class UserClient:
             async with supabase_client.SupabaseManager() as manager:
                 db_client = await manager.get_client()
                 response = await db_client.table("user").select("id").eq("mail_addres", mail_addres).eq("password", password).execute()
-                if len(response.data) > 0:
+                if len(response.data) > 0:#>0としているけど、それが2以上になることはないはず
                     return response.data
-                else:
+                else:#長さ0の場合、条件に合うuserがいないということ。
                     return False
         except Exception as e:
             logger.error(e)
@@ -44,7 +44,7 @@ async def main():
     #     logger.info("同じメアドがすでに登録されています！")
         
     user_client = UserClient()
-    user = await user_client.find("example1234@mail.com", "password123")
+    user = await user_client.find("example12345@mail.com", "password123")
     if user:
         print(user)
 
