@@ -8,6 +8,17 @@ export default defineConfig({
     alias: {
       '@components': '/src/components',
       '@routes': '/src/routes',
+      '@usecase': '/src/service',
+    }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://shopping-mapper.onrender.com/',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
     }
   }
 })
