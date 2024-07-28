@@ -1,4 +1,4 @@
-import supabase_client
+from . import supabase_client
 from fastapi import HTTPException
 from supabase import PostgrestAPIError
 
