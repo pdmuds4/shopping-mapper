@@ -1,7 +1,9 @@
+import { NotFoundMemo } from "@components/RecordMemo";
+
 const RecordMemo: React.FC = () => {
     return (
         <>
-            Record Memo
+            <NotFoundMemo onCreateMemo={()=> console.log(1)}/>
         </>
     )
 }
