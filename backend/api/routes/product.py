@@ -1,6 +1,8 @@
-from fastapi import APIRouter
+## api/models/routes/products.py
+
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from ..models import product
 
 router = APIRouter()
@@ -30,13 +32,20 @@ class ProductResponse(BaseModel):
     name: str
     is_done: bool
     created_at: str
-    latitude: float
-    longitude: float
-    price: int
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    price: Optional[int] = None
 
 @router.get("/{memo_id}", response_model=List[ProductResponse])
 async def get_products(memo_id: int):
     return await product.getProducts(memo_id)
+
+@router.get("/user/{user_id}", response_model=List[ProductResponse])
+async def get_products_from_user_id(user_id: int):
+    try:
+        return await product.getProductsFromUserID(user_id)
+    except HTTPException as e:
+        raise HTTPException(status_code=e.status_code, detail=e.detail)
 
 @router.post("/", response_model=int)
 async def add_related_product(products: ProductCreate):

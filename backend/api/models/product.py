@@ -22,6 +22,25 @@ async def getProducts(memo_id: int):
 
         return products
 
+# 指定されたuser_idの未購入の商品を取得
+async def getProductsFromUserID(user_id: int):
+    async with supabase_client.SupabaseManager() as sbm:
+        client = await sbm.get_client()
+        # memoテーブルから指定されたuser_idに対応するmemo_idを取得
+        memo_ids = await client.table("memo").select("id").eq("user_id", user_id).execute()
+        
+        if not memo_ids.data:
+            raise HTTPException(status_code=404, detail="No memos found for the given user_id")
+
+        # 取得したmemo_idをもとに、未購入の商品を取得
+        products = []
+        for memo in memo_ids.data:
+            memo_id = memo["id"]
+            product_records = await client.table("product").select("*").eq("memo_id", memo_id).eq("is_done", False).execute()
+            products.extend(product_records.data)
+        
+        return products
+
 # 商品を登録
 async def addRelatedProduct(memo_id: int, new_product: str):
     async with supabase_client.SupabaseManager() as sbm:
