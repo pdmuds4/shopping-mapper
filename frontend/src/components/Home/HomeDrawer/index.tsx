@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
-import { Article, Restore, Logout } from '@mui/icons-material'
+import { Article, Restore, Logout, PinDrop } from '@mui/icons-material'
 import { s__homeDrawerLayout, s__homeDrawerTopBody, s__homeDrawerBottomBody, s__homeDrawerIcon, s__homeDrawerText } from './style';
 
 import CurrentMemo from '@routes/_CurrentMemo';
 import RecordMemo from '@routes/_RecordMemo';
+import ProductsMap from '@routes/_ProductsMap';
 
 const HomeDrawer: React.FC<{
     onSetMainContent: (content: JSX.Element) => void;
@@ -22,6 +23,11 @@ const HomeDrawer: React.FC<{
             text: 'メモ履歴',
             icon: <Restore />,
             onclick: () => props.onSetMainContent(<RecordMemo />)
+        },
+        {
+            text: '購入場所を確認',
+            icon: <PinDrop />,
+            onclick: () => props.onSetMainContent(<ProductsMap />)
         }
     ];
 

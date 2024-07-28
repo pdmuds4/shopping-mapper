@@ -12,7 +12,7 @@ const Home: React.FC = () => {
             <HomeAppBar />
             <HomeDrawer onSetMainContent={(page)=>setMainContent(page)} />
             
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1 }}>
                 <Toolbar />
                 {mainContent}
             </Box>
