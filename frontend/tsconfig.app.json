@@ -12,7 +12,7 @@
       "@domain/*": ["src/models/*"],
       "@components/*" : ["src/components/*"],
       "@routes/*" : ["src/routes/*"],
-      "@usecase/*": ["src/service"],
+      "@usecase/*": ["src/service/*"],
       "@utils/*" : ["src/utils/*"],
     },
 

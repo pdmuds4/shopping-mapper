@@ -9,6 +9,8 @@ export default defineConfig({
       '@components': '/src/components',
       '@routes': '/src/routes',
       '@usecase': '/src/service',
+      '@domain': '/src/models',
+      '@utils': '/src/utils',
     }
   },
   server: {
