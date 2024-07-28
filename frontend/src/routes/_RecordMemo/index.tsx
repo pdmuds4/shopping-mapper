@@ -1,9 +1,9 @@
-import { MemoList } from "@components/RecordMemo";
+import { ViewMemo } from "@components/RecordMemo";
 
 const RecordMemo: React.FC = () => {
     return (
         <>
-            <MemoList />
+            <ViewMemo />
         </>
     )
 }
