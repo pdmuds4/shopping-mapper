@@ -1,4 +1,6 @@
 import supabase_client
+from fastapi import HTTPException
+from supabase import PostgrestAPIError
 
 # メモ内の商品のデータを取得
 async def getProducts(memo_id: int):
