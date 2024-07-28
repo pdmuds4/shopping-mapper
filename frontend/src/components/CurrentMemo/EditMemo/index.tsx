@@ -8,7 +8,7 @@ import { s__editMemoBody, s__editMemoTypography, s__editMemoList } from './style
 
 const EditMemo: React.FC = () => {
     return (
-        <Box >
+        <Box>
             <Card sx={s__editMemoBody}>
                 <CardHeader 
                     title="- メモの編集" 
