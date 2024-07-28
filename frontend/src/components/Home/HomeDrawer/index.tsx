@@ -4,6 +4,7 @@ import { Article, Restore, Logout } from '@mui/icons-material'
 import { s__homeDrawerLayout, s__homeDrawerTopBody, s__homeDrawerBottomBody, s__homeDrawerIcon, s__homeDrawerText } from './style';
 
 import CurrentMemo from '@routes/_CurrentMemo';
+import RecordMemo from '@routes/_RecordMemo';
 
 const HomeDrawer: React.FC<{
     onSetMainContent: (content: JSX.Element) => void;
@@ -20,7 +21,7 @@ const HomeDrawer: React.FC<{
         {
             text: 'メモ履歴',
             icon: <Restore />,
-            onclick: () => console.log('main content is メモ履歴') //props.setMainContent()
+            onclick: () => props.onSetMainContent(<RecordMemo />)
         }
     ];
 
