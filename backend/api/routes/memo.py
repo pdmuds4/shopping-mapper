@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 from ..models import memo2
 
 router = APIRouter()
@@ -12,6 +12,7 @@ class MemoCreate(BaseModel):
 
 class MemoResponse(BaseModel):
     id: int
+    created_at: str
     user_id: int
     title: str
     done: bool
