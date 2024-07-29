@@ -6,7 +6,9 @@ import HiddenBox from './HiddenBox';
 
 import { s__editMemoBody, s__editMemoTypography, s__editMemoList } from './style';
 
-const EditMemo: React.FC = () => {
+const EditMemo: React.FC<{
+    backToViewMemo: () => void;
+}> = (props) => {
     return (
         <Box>
             <Card sx={s__editMemoBody}>
@@ -32,7 +34,7 @@ const EditMemo: React.FC = () => {
                                     aria-label="back" 
                                     size='large'
                                     // [TODO]: onClickでメモ一覧に戻る処理を実装する
-                                    // onClick={()=>console.log('back')}
+                                    onClick={props.backToViewMemo}
                                 >
                                     <Reply fontSize="inherit"/>
                                 </IconButton>

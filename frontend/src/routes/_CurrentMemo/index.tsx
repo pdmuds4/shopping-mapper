@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react"
 
-import { ViewMemo, NotFoundMemo, EditMemo } from "@components/CurrentMemo"
+import { ViewMemo, NotFoundMemo, CreateMemo } from "@components/CurrentMemo"
 import { LoadingDrop } from "@components/ui"
 
 import GetCurrentMemoUseCase from "@usecase/getCurrentMemo"
 import MemoRepository from "@domain/memo/repository"
-import { NotDoneErrorDTO, NotDoneRequestDTO, NotDoneResponseDTO } from "@domain/memo/dto"
+import MemoEntity from "@domain/memo/entity"
+import { NotDoneErrorDTO, NotDoneRequestDTO } from "@domain/memo/dto"
 
 
 const CurrentMemo: React.FC = () => {
     const [mainComponent, setMainComponent] = useState<JSX.Element>()
-    const [current_memo, setCurrentMemo] = useState<NotDoneResponseDTO>()
-
     const [is_loading, setLoading] = useState(true)
 
     useEffect(()=>{
@@ -22,18 +21,23 @@ const CurrentMemo: React.FC = () => {
                 new MemoRepository, 
                 new NotDoneRequestDTO(parseInt(user_id))
             ).execute()
-                .then((response: NotDoneResponseDTO | NotDoneErrorDTO ) => {
+                .then((response: MemoEntity | NotDoneErrorDTO ) => {
                     console.log(response);
                     
-                    if (response instanceof NotDoneResponseDTO) {
-                        setCurrentMemo(response)
+                    if (response instanceof MemoEntity) {
                         setMainComponent(
                             <ViewMemo />
                         )
                     } else if (response instanceof NotDoneErrorDTO) {
                         setMainComponent(
                             <NotFoundMemo 
-                                onCreateMemo={()=>setMainComponent(<EditMemo />)} 
+                                onCreateMemo={()=>setMainComponent(
+                                    <CreateMemo 
+                                        toViewMemo={()=>setMainComponent(
+                                            <ViewMemo />
+                                        )}
+                                    />
+                                )} 
                             />
                         )
                     }

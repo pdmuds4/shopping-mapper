@@ -1,6 +1,4 @@
-import { NotDoneResponse } from "./notdoneTypes";
-
-export default class NotDoneResponseDTO {
+export default class MemoEntity {
     constructor(
         private id: number,
         private user_id: number,
@@ -8,7 +6,11 @@ export default class NotDoneResponseDTO {
         private done: boolean
     ){}
 
-    json(): NotDoneResponse {
+    get getId(): number {
+        return this.id;
+    }
+
+    json() {
         return {
             id: this.id,
             user_id: this.user_id,

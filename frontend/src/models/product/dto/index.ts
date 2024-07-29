@@ -1,0 +1,1 @@
+export { default as CreateProductRequestDTO } from './create/create_request';
