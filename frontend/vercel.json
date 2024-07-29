@@ -1,0 +1,16 @@
+{ 
+    "rewrites" :  [
+        { 
+            "source" :  "/login", 
+            "destination" :  "/"
+        },
+        { 
+            "source" :  "/register", 
+            "destination" :  "/"
+        },
+        {
+            "source": "/api/:path*",
+            "destination": "https://shopping-mapper.onrender.com/:path*"
+        }
+    ] 
+}
