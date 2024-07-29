@@ -51,7 +51,7 @@ const ViewMemo: React.FC<{
                 ))}
                 </List>
             </CardContent>
-                <MenuDial onEdit={()=>console.log(1)} />
+                <MenuDial memo_id={props.memoEntity.getId} onEdit={()=>console.log(1)} />
         </Card>
     )
 }

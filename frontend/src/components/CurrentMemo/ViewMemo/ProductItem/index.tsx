@@ -22,7 +22,7 @@ const ProductItem: React.FC<{
                     props.product_entity.getId,
                     checked_location?.latitude || 0,
                     checked_location?.longitude || 0,
-                    NaN // [TODO]: 金額の入力機能を追加
+                    0 // [TODO]: 金額の入力機能を追加
                 )
             ).execute()
             .then((response) => {
@@ -45,7 +45,7 @@ const ProductItem: React.FC<{
         }
     }, [checked_location?.latitude, checked_location?.longitude, is_checked, props.product_entity.getId]);
 
-    // 3秒後に変更があれば保存処理を実行
+    // 1秒後に変更があれば保存処理を実行
     useEffect(()=>{
         const timer = setTimeout(() => {
             if (is_checked !== default_checked) {
@@ -56,7 +56,7 @@ const ProductItem: React.FC<{
                 setDefaultChecked(is_checked);
                 onCheckSaveHandler();
             }
-        }, 2000);
+        }, 1000);
         return () => clearTimeout(timer);
     },[is_checked, default_checked, onCheckSaveHandler])
 

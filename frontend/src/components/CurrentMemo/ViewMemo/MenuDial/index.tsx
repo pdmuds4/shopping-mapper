@@ -2,14 +2,31 @@ import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 import { Check, Edit, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 import { s__menuDialMain } from './style';
 
+import DoneMemoUseCase from '@usecase/doneMemo';
+import MemoRepository from '@domain/memo/repository';
+import { DoneRequestDTO } from '@domain/memo/dto';
+
 const MenuDial: React.FC<{
+    memo_id: number;
     onEdit: () => void;
 }> = (props) => {
+    const doneMemoHandler = async() => {
+        new DoneMemoUseCase(
+            new MemoRepository,
+            new DoneRequestDTO(props.memo_id)
+        ).execute()
+        .then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.error(error);
+        })
+    };
+
     const d__dialItems = [
         { 
             icon: <Check />, 
-            tooltip: '完了としてマークする', 
-            onclick: () => console.log('complete') 
+            tooltip: '完了としてマークする',
+            onclick: doneMemoHandler
         },{ 
             icon: <Edit />,  
             tooltip: '編集する', 

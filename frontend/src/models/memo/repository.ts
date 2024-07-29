@@ -4,6 +4,7 @@ import MemoEntity from "./entity";
 import { NotDoneResponse } from "@domain/memo/dto/notdone/notdoneTypes";
 import { CreateResponse } from "@domain/memo/dto/create/createTypes";
 import { NotDoneRequestDTO, NotDoneErrorDTO, CreateMemoRequestDTO } from "@domain/memo/dto";
+import DoneRequestDTO from "./dto/done/done_request";
 
 export default class MemoRepository {
 
@@ -40,5 +41,14 @@ export default class MemoRepository {
             response.title,
             response.done,
         );
+    }
+
+    async doneMemo(request: DoneRequestDTO) {
+        const response = await callAPI(
+            'PATCH',
+            `/api/memo/mark_up/${request.getMemoId}`
+        );
+
+        return response;
     }
 }
