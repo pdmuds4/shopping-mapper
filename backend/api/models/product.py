@@ -1,5 +1,3 @@
-## api/models/product.py
-
 from . import supabase_client
 from fastapi import HTTPException
 from supabase import PostgrestAPIError
@@ -60,13 +58,10 @@ async def updateAlreadyBuying(product_id: int, product_latitude: float, product_
     async with supabase_client.SupabaseManager() as sbm:
         client = await sbm.get_client()
         # 指定されたproduct_idに一致する商品を購入済みに変更し、緯度、経度、価格を更新
-        await client.table("product").update({"is_done": True}).eq("id", product_id).execute()
-        await client.table("product").update({"latitude": product_latitude}).eq("id", product_id).execute()
-        await client.table("product").update({"longitude": product_longitude}).eq("id", product_id).execute()
-        await client.table("product").update({"price": product_price}).eq("id", product_id).execute()
+        await client.table("product").update({"is_done": True, "latitude": product_latitude, "longitude": product_longitude, "price": product_price}).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        {"product_id":result_product_id.data[0]["id"]}
+        return {"product_id":result_product_id.data[0]["id"]}
     
 # 商品を未購入に変更
 async def updateNotBuying(product_id: int):
@@ -81,7 +76,7 @@ async def updateNotBuying(product_id: int):
         }).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        {"product_id":result_product_id.data[0]["id"]}
+        return {"product_id":result_product_id.data[0]["id"]}
     
 # 商品の名前を更新
 async def updateName(product_id: int, new_data: str):
@@ -91,7 +86,7 @@ async def updateName(product_id: int, new_data: str):
         await client.table("product").update({"name": new_data}).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        {"product_id":result_product_id.data[0]["id"]}
+        return {"product_id":result_product_id.data[0]["id"]}
 
 # 商品の価格を更新
 async def updatePrice(product_id: int, new_price: int):
@@ -101,4 +96,4 @@ async def updatePrice(product_id: int, new_price: int):
         await client.table("product").update({"price": new_price}).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        {"product_id":result_product_id.data[0]["id"]}
+        return {"product_id":result_product_id.data[0]["id"]}
