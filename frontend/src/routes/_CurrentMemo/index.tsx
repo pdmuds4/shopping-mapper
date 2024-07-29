@@ -24,14 +24,21 @@ const CurrentMemo: React.FC = () => {
                     console.log(response);
                     
                     if (response instanceof MemoEntity) {
-                        setMainComponent(<ViewMemo memoEntity={response} />)
+                        setMainComponent(
+                            <ViewMemo 
+                                memoEntity={response} 
+                            />
+                        )
                     } else if (response instanceof NotDoneErrorDTO) {
                         setMainComponent(
                             <NotFoundMemo 
                                 onCreateMemo={()=>setMainComponent(
                                     <CreateMemo 
-                                        toViewMemo={(memo_entity)=>setMainComponent(
-                                            <ViewMemo memoEntity={memo_entity} />
+                                        toViewMemo={(memo_entity)=>
+                                            setMainComponent(
+                                                <ViewMemo 
+                                                    memoEntity={memo_entity}
+                                                />
                                         )}
                                     />
                                 )} 

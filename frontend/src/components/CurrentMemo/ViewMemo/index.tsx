@@ -12,7 +12,6 @@ import { GetMemoRequestDTO } from '@domain/product/dto';
 
 const ViewMemo: React.FC<{
     memoEntity: MemoEntity
-    //toEdit: () => void;
 }> = (props) => {
     const [memoProducts, setMemoProducts] = useState<ProductEntity[]>([]);
 
@@ -51,7 +50,7 @@ const ViewMemo: React.FC<{
                 ))}
                 </List>
             </CardContent>
-                <MenuDial memo_id={props.memoEntity.getId} onEdit={()=>console.log(1)} />
+            <MenuDial memo_id={props.memoEntity.getId} />
         </Card>
     )
 }
