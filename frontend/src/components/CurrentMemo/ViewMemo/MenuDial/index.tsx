@@ -10,7 +10,7 @@ import { DoneRequestDTO } from '@domain/memo/dto';
 
 const MenuDial: React.FC<{
     memo_id: number;
-}> = (props) => {
+}> = (/*props*/) => {
     const navigate = useNavigate();
 
     const doneMemoHandler = async() => {
