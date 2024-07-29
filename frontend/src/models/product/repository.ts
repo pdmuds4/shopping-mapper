@@ -14,6 +14,10 @@ export default class ProductRepository {
         return response;
     }
 
+    // async getAllDone (request: GetDoneRequestDTO)/*: Promise<ProductEntity[]>*/ {
+    //     return;
+    // }
+
     async getMemoProducts(request: GetMemoRequestDTO): Promise<ProductEntity[]> {
         const response = await callAPI(
             'GET',
