@@ -6,3 +6,9 @@ export type LoginRequest = {
 export type LoginResponse = {
     id: number;
 }
+
+export type LoginError = {
+    detail : {
+        message: string;
+    }
+}

@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Stack, Link, Box, Snackbar, Alert } from '@mui/material'
 import { CustomInput, CustomButton, LoadingDrop } from '@components/ui'
 
 import UserLoginUseCase from '@usecase/userLogin'
 import UserInfoRepository from '@domain/userInfo/repository'
-import { LoginRequestDTO } from '@domain/userInfo/dto'
+import { LoginRequestDTO, LoginErrorDTO, LoginResponseDTO } from '@domain/userInfo/dto'
 
 const LoginForm: React.FC = () => {
+    const navigate = useNavigate();
     const [requestDTO, setLoginInVal] = useState<LoginRequestDTO>(new LoginRequestDTO())
     
     // エラー関係
@@ -17,18 +19,18 @@ const LoginForm: React.FC = () => {
     const [is_loading, setLoading] = useState(false)
 
     const loginUsecaseHandler = async () => {
-        setLoading(true)
-        try {
+            setLoading(true)
             const response = await new UserLoginUseCase(new UserInfoRepository, requestDTO).execute()
             console.log(response)
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                setErrorMsg(error.message === '' ? 'エラーが発生しました' : error.message)
+
+            if (response instanceof LoginErrorDTO) {
+                setErrorMsg(response.getMessage)
                 setSnack(true)
+            } else if (response instanceof LoginResponseDTO) {
+                localStorage.setItem('user_id', response.getId.toString())
+                navigate('/')
             }
-        } finally {
             setLoading(false)
-        }
     }
 
     return (
