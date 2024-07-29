@@ -35,7 +35,10 @@ const HomeDrawer: React.FC<{
         {
             text: 'ログアウト',
             icon: <Logout />,
-            onclick: () => navigate('/login')
+            onclick: () => {
+                localStorage.removeItem('user_id')
+                navigate('/login')
+            }
         }
     ];
 
