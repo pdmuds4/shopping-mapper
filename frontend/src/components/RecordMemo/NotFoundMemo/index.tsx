@@ -1,10 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { s__notFoundMemoImg, s__notFoundMemoTypography } from './style';
-import { CustomButton } from '@components/ui';
 
-const NotFoundMemo: React.FC<{
-    onCreateMemo: () => void
-}> = (props) => {
+const NotFoundMemo: React.FC = () => {
     return (
         <Stack spacing={3}>
             <Box textAlign='center'>
@@ -14,14 +11,6 @@ const NotFoundMemo: React.FC<{
                 <Typography sx={s__notFoundMemoTypography} variant='h3'>
                     メモ履歴はありません
                 </Typography>
-            </Box>
-            <Box textAlign='center'>
-                <CustomButton
-                    onClick={props.onCreateMemo}
-                    sx={{ width: '30%' }}
-                >
-                    メモを作成する
-                </CustomButton>
             </Box>
         </Stack>
     )
