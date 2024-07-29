@@ -43,7 +43,7 @@ async def addRelatedProduct(memo_id: int, new_product: str):
         await client.table("product").insert({"memo_id": memo_id, "name": new_product}).execute()
         # インサートによって発行されたproduct_idを取得
         result_product_id = await client.table("product").select("id").eq("name", new_product).eq("memo_id", memo_id).execute()
-        return result_product_id.data[0]["id"]
+        return {"product_id":result_product_id.data[0]["id"]}
 
 # 商品を削除
 async def deleteProduct(product_id: int):
@@ -53,7 +53,7 @@ async def deleteProduct(product_id: int):
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
         # 指定されたproduct_idに一致する商品を削除
         await client.table("product").delete().eq("id", product_id).execute()
-        return result_product_id.data[0]["id"]
+        return {"product_id":result_product_id.data[0]["id"]}
     
 # 商品を購入済みに変更
 async def updateAlreadyBuying(product_id: int, product_latitude: float, product_longitude: float, product_price: int):
@@ -66,7 +66,7 @@ async def updateAlreadyBuying(product_id: int, product_latitude: float, product_
         await client.table("product").update({"price": product_price}).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        return result_product_id.data[0]["id"]
+        {"product_id":result_product_id.data[0]["id"]}
     
 # 商品を未購入に変更
 async def updateNotBuying(product_id: int):
@@ -81,7 +81,7 @@ async def updateNotBuying(product_id: int):
         }).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        return result_product_id.data[0]["id"]
+        {"product_id":result_product_id.data[0]["id"]}
     
 # 商品の名前を更新
 async def updateName(product_id: int, new_data: str):
@@ -91,7 +91,7 @@ async def updateName(product_id: int, new_data: str):
         await client.table("product").update({"name": new_data}).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        return result_product_id.data[0]["id"]
+        {"product_id":result_product_id.data[0]["id"]}
 
 # 商品の価格を更新
 async def updatePrice(product_id: int, new_price: int):
@@ -101,4 +101,4 @@ async def updatePrice(product_id: int, new_price: int):
         await client.table("product").update({"price": new_price}).eq("id", product_id).execute()
         # 更新された商品のidを取得
         result_product_id = await client.table("product").select("id").eq("id", product_id).execute()
-        return result_product_id.data[0]["id"]
+        {"product_id":result_product_id.data[0]["id"]}
