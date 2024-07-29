@@ -1,8 +1,10 @@
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 import { Check, Edit, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
-import { s__menuDialMain, s__menuDialAction } from './style';
+import { s__menuDialMain } from './style';
 
-const MenuDial: React.FC = () => {
+const MenuDial: React.FC<{
+    onEdit: () => void;
+}> = (props) => {
     const d__dialItems = [
         { 
             icon: <Check />, 
@@ -11,7 +13,7 @@ const MenuDial: React.FC = () => {
         },{ 
             icon: <Edit />,  
             tooltip: '編集する', 
-            onclick: () => console.log('edit')     
+            onclick: props.onEdit
         }
     ];
     
@@ -31,7 +33,6 @@ const MenuDial: React.FC = () => {
                     tooltipTitle={item.tooltip} 
                     tooltipOpen
                     onClick={item.onclick}
-                    sx={s__menuDialAction}
                 />
             ))}
         </SpeedDial>

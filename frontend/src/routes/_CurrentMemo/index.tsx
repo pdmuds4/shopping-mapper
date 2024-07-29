@@ -8,7 +8,6 @@ import MemoRepository from "@domain/memo/repository"
 import MemoEntity from "@domain/memo/entity"
 import { NotDoneErrorDTO, NotDoneRequestDTO } from "@domain/memo/dto"
 
-
 const CurrentMemo: React.FC = () => {
     const [mainComponent, setMainComponent] = useState<JSX.Element>()
     const [is_loading, setLoading] = useState(true)
@@ -25,16 +24,14 @@ const CurrentMemo: React.FC = () => {
                     console.log(response);
                     
                     if (response instanceof MemoEntity) {
-                        setMainComponent(
-                            <ViewMemo />
-                        )
+                        setMainComponent(<ViewMemo memoEntity={response} />)
                     } else if (response instanceof NotDoneErrorDTO) {
                         setMainComponent(
                             <NotFoundMemo 
                                 onCreateMemo={()=>setMainComponent(
                                     <CreateMemo 
-                                        toViewMemo={()=>setMainComponent(
-                                            <ViewMemo />
+                                        toViewMemo={(memo_entity)=>setMainComponent(
+                                            <ViewMemo memoEntity={memo_entity} />
                                         )}
                                     />
                                 )} 

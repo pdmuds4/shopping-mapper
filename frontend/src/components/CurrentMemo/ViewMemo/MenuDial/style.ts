@@ -11,7 +11,3 @@ export const s__menuDialMain: SxProps = {
     bottom: 50, 
     right: 50
 }
-
-export const s__menuDialAction: SxProps = {
-    backgroundColor: 'white',
-}

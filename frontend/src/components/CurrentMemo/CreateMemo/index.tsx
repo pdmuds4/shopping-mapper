@@ -13,9 +13,10 @@ import MemoRepository from '@domain/memo/repository';
 import ProductRepository from '@domain/product/repository';
 import CreateMemoUseCase from '@usecase/createMemo';
 import CreateProductUseCase from '@usecase/createProduct';
+import MemoEntity from '@domain/memo/entity';
 
 const CreateMemo: React.FC<{
-    toViewMemo: () => void;
+    toViewMemo: (memoEntity: MemoEntity) => void;
 }> = (props) => {
     const [memoRequestDto, setRequestDto] = useState<CreateMemoRequestDTO>(
         new CreateMemoRequestDTO(parseInt(localStorage.getItem('user_id') || ''),'')
@@ -35,7 +36,7 @@ const CreateMemo: React.FC<{
                     new CreateProductRequestDTO(memo_response.getId, product)
                 );
             }));
-            props.toViewMemo();
+            props.toViewMemo(memo_response);
         } catch (error) {
             console.error(error);
         } finally {

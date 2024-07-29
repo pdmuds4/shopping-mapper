@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 export const callAPI = async <ReqT>(
-    method: 'GET' | 'POST',
+    method: 'GET' | 'POST' | 'PATCH',
     endpoint: string,
     data?: ReqT,
 ) => {

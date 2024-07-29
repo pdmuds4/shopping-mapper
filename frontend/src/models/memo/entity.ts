@@ -10,6 +10,10 @@ export default class MemoEntity {
         return this.id;
     }
 
+    get getTitle(): string {
+        return this.title;
+    }
+
     json() {
         return {
             id: this.id,
