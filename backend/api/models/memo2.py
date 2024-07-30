@@ -109,7 +109,7 @@ async def markUpMemo(memo_id: int) -> dict:
                 pass
             
             # メモを完了にマーク
-            resp = await client.table("memo").update({"done": True}).eq("id", memo_id).select("id, created_at, user_id, title, done").execute()
+            resp = await client.table("memo").update({"done": True}).eq("id", memo_id).execute()
             if not resp.data:
                 raise HTTPException(status_code=500, detail={"message": "メモの完了に失敗しました。"})
             return {"message": "メモが完了としてマークされました。"}
@@ -132,7 +132,7 @@ async def markDownMemo(memo_id: int) -> dict:
                 pass
             
             # メモを未完了にマーク
-            resp = await client.table("memo").update({"done": False}).eq("id", memo_id).select("id, created_at, user_id, title, done").execute()
+            resp = await client.table("memo").update({"done": False}).eq("id", memo_id).execute()
             if not resp.data:
                 raise HTTPException(status_code=500, detail={"message": "メモの未完了への書き換えに失敗しました。"})
             return {"message": "メモが未完了としてマークされました。"}
