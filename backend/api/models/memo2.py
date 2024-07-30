@@ -101,9 +101,12 @@ async def markUpMemo(memo_id: int) -> dict:
         async with supabase_client.SupabaseManager() as sbm:
             client = await sbm.get_client()
             # 未購入の商品が存在するか確認
-            product_resp = await client.table("product").select("id").eq("memo_id", memo_id).eq("is_done", False).execute()
-            if product_resp.data:
-                raise HTTPException(status_code=400, detail={"message": "未購入の商品が存在します。メモを完了できません。"})
+            try:
+                product_resp = await client.table("product").select("id").eq("memo_id", memo_id).eq("is_done", False).execute()
+                if product_resp.data:
+                    raise HTTPException(status_code=400, detail={"message": "未購入の商品が存在します。メモを完了できません。"})
+            except:
+                pass
             
             # メモを完了にマーク
             resp = await client.table("memo").update({"done": True}).eq("id", memo_id).select("id, created_at, user_id, title, done").execute()
@@ -121,9 +124,12 @@ async def markDownMemo(memo_id: int) -> dict:
         async with supabase_client.SupabaseManager() as sbm:
             client = await sbm.get_client()
             # 他の未完了のメモが存在するか確認
-            existing_memo_resp = await client.table("memo").select("id").eq("done", False).execute()
-            if existing_memo_resp.data:
-                raise HTTPException(status_code=400, detail={"message": "既に未完了のメモが存在します。メモを未完了にできません。"})
+            try:
+                existing_memo_resp = await client.table("memo").select("id").eq("done", False).execute()
+                if existing_memo_resp.data:
+                    raise HTTPException(status_code=400, detail={"message": "既に未完了のメモが存在します。メモを未完了にできません。"})
+            except:
+                pass
             
             # メモを未完了にマーク
             resp = await client.table("memo").update({"done": False}).eq("id", memo_id).select("id, created_at, user_id, title, done").execute()
