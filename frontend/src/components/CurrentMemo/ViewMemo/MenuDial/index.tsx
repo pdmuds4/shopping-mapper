@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 import { Check, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 import { s__menuDialMain } from './style';
@@ -10,17 +8,14 @@ import { DoneRequestDTO } from '@domain/memo/dto';
 
 const MenuDial: React.FC<{
     memo_id: number;
-}> = (/*props*/) => {
-    const navigate = useNavigate();
-
+}> = (props) => {
     const doneMemoHandler = async() => {
         new DoneMemoUseCase(
             new MemoRepository,
-            new DoneRequestDTO(1/*props.memo_id*/)
+            new DoneRequestDTO(props.memo_id)
         ).execute()
         .then((response) => {
             console.log(response);
-            navigate('/');
         }).catch((error) => {
             console.error(error);
         })
