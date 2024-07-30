@@ -55,9 +55,12 @@ async def createNewMemo(user_id: int, title: str) -> Memo:
         async with supabase_client.SupabaseManager() as sbm:
             client = await sbm.get_client()
             # 未完了のメモが既に存在するか確認
-            existing_memo_resp = await client.table("memo").select("id").eq("user_id", user_id).eq("done", False).execute()
-            if existing_memo_resp.data:
-                raise HTTPException(status_code=400, detail={"message": "未完了のメモが既に存在しています。新しいメモを作成できません。"})
+            try:
+                existing_memo_resp = await client.table("memo").select("id").eq("user_id", user_id).eq("done", False).execute()
+                if existing_memo_resp.data:
+                    raise HTTPException(status_code=400, detail={"message": "未完了のメモが既に存在しています。新しいメモを作成できません。"})
+            except:
+                pass
             
             # 新しいメモを作成
             new_memo = {
