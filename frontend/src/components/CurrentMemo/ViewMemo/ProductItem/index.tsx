@@ -60,7 +60,8 @@ const ProductItem: React.FC<{
             }
         }, 1000);
         return () => clearTimeout(timer);
-    },[is_checked, default_checked, onCheckSaveHandler, checked_location]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[is_checked]);
 
     return (
         <>
