@@ -26,6 +26,10 @@ export default class ProductEntity {
         return this.created_at.toLocaleString();
     }
 
+    get getLocation(): {lat: number, lng: number} {
+        return {lat: this.latitude, lng: this.longitude}
+    }
+
     json() {
         return {
             id: this.id,
