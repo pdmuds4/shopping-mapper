@@ -14,7 +14,7 @@ export default class CreateRequestDTO {
 
     json() {
         return {
-            user_id: this.memo_id,
+            memo_id: this.memo_id,
             name: this.name
         }
     }

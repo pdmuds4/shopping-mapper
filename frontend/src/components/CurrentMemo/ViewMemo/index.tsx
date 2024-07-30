@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, Divider, /*Chip,*/ List } from '@mui/material';
-import { s__viewMemoBody, /*s__viewMemoChip*/ } from './style';
+import { Card, CardContent, CardHeader, Divider, Chip, List } from '@mui/material';
+import { s__viewMemoBody,s__viewMemoChip } from './style';
 import ProductItem from './ProductItem';
 import MenuDial from './MenuDial';
 
@@ -12,11 +12,12 @@ import { GetMemoRequestDTO } from '@domain/product/dto';
 
 const ViewMemo: React.FC<{
     memoEntity: MemoEntity
+    toMemoList: () => void
 }> = (props) => {
     const [memoProducts, setMemoProducts] = useState<ProductEntity[]>([]);
 
     useEffect(()=>{
-        const request = new GetMemoRequestDTO(1/*props.memoEntity.getId*/);
+        const request = new GetMemoRequestDTO(props.memoEntity.getId);
         new GetMemoProductsUseCase(
             new ProductRepository,
             request
@@ -29,18 +30,21 @@ const ViewMemo: React.FC<{
         })
     },[props.memoEntity.getId])
 
+    const memoFinishHandler = () => {
+        props.toMemoList();
+    };
+
     return (
         <Card sx={s__viewMemoBody}>
             <CardHeader 
                 title={props.memoEntity.getTitle}
-                // [TODO]: created_atが返されてない
-                // action={
-                //     <Chip 
-                //         sx={s__viewMemoChip}
-                //         label={`作成日時 - ${new Date().toLocaleString()}`}
-                //         variant='outlined'
-                //     />
-                // }
+                action={
+                    <Chip 
+                        sx={s__viewMemoChip}
+                        label={`作成日時 - ${props.memoEntity.getCreatedAt}`}
+                        variant='outlined'
+                    />
+                }
             />
             <Divider />
             <CardContent>
@@ -50,7 +54,7 @@ const ViewMemo: React.FC<{
                 ))}
                 </List>
             </CardContent>
-            <MenuDial memo_id={props.memoEntity.getId} />
+            <MenuDial memo_id={props.memoEntity.getId} onFinished={memoFinishHandler} />
         </Card>
     )
 }

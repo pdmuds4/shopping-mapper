@@ -31,10 +31,10 @@ const CreateMemo: React.FC<{
             setLoading(true);
             const memo_response = await new CreateMemoUseCase(new MemoRepository ,memoRequestDto).execute();
             await Promise.all(productList.map(async (product) => {
-                new CreateProductUseCase(
+                await new CreateProductUseCase(
                     new ProductRepository, 
                     new CreateProductRequestDTO(memo_response.getId, product)
-                );
+                ).execute();
             }));
             props.toViewMemo(memo_response);
         } catch (error) {

@@ -5,6 +5,7 @@ export type CreateRequest = {
 
 export type CreateResponse = {
     id: number;
+    created_at: string;
     user_id: number;
     title: string;
     done: boolean;

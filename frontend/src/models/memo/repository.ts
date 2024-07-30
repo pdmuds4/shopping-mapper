@@ -3,7 +3,7 @@ import { callAPI } from "@utils/callApi";
 import MemoEntity from "./entity";
 import { NotDoneResponse } from "@domain/memo/dto/notdone/notdoneTypes";
 import { CreateResponse } from "@domain/memo/dto/create/createTypes";
-import { NotDoneRequestDTO, NotDoneErrorDTO, CreateMemoRequestDTO } from "@domain/memo/dto";
+import { NotDoneRequestDTO, NotDoneErrorDTO, CreateMemoRequestDTO, /*FinishedRequestDTO*/ } from "@domain/memo/dto";
 import DoneRequestDTO from "./dto/done/done_request";
 
 export default class MemoRepository {
@@ -18,6 +18,7 @@ export default class MemoRepository {
             const recent_notdone_memo: NotDoneResponse = response[0];
             return new MemoEntity(
                 recent_notdone_memo.id,
+                new Date(recent_notdone_memo.created_at),
                 recent_notdone_memo.user_id,
                 recent_notdone_memo.title,
                 recent_notdone_memo.done,
@@ -28,6 +29,10 @@ export default class MemoRepository {
         }
     }
 
+    // async getFinishedMemo(request: FinishedRequestDTO): Promise<MemoEntity[]> {
+
+    // }
+
     async createMemo(request: CreateMemoRequestDTO): Promise<MemoEntity> {
         const response = await callAPI(
             'POST',
@@ -37,6 +42,7 @@ export default class MemoRepository {
         
         return new MemoEntity(
             response.id,
+            new Date(response.created_at),
             response.user_id,
             response.title,
             response.done,
