@@ -44,6 +44,13 @@ async def get_products_from_user_id(user_id: int):
         return await product.getProductsFromUserID(user_id)
     except HTTPException as e:
         raise HTTPException(status_code=e.status_code, detail=e.detail)
+    
+@router.get("/done/user/{user_id}", response_model=List[ProductResponse])
+async def get_products_from_user_id(user_id: int):
+    try:
+        return await product.getDoneProductsFromUserID(user_id)
+    except HTTPException as e:
+        raise HTTPException(status_code=e.status_code, detail=e.detail)
 
 @router.post("/", response_model=dict)
 async def add_related_product(products: ProductCreate):
