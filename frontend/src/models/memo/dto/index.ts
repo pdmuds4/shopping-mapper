@@ -6,3 +6,4 @@ export { default as CreateMemoRequestDTO } from './create/create_request';
 export { default as DoneRequestDTO } from './done/done_request';
 
 export { default as FinishedRequestDTO } from './finished/finished_request';
+export { default as FinishedErrorDTO } from './finished/finished_error';

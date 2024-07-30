@@ -29,7 +29,7 @@ export default class ProductRepository {
             product.memo_id,
             product.name,
             product.is_done,
-            product.created_at,
+            new Date(product.created_at),
             product.latitude,
             product.longitude,
             product.price,

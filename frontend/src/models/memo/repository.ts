@@ -3,7 +3,8 @@ import { callAPI } from "@utils/callApi";
 import MemoEntity from "./entity";
 import { NotDoneResponse } from "@domain/memo/dto/notdone/notdoneTypes";
 import { CreateResponse } from "@domain/memo/dto/create/createTypes";
-import { NotDoneRequestDTO, NotDoneErrorDTO, CreateMemoRequestDTO, /*FinishedRequestDTO*/ } from "@domain/memo/dto";
+import { FinishedResponse } from "@domain/memo/dto/finished/finishedTypes";
+import { NotDoneRequestDTO, NotDoneErrorDTO, CreateMemoRequestDTO, FinishedRequestDTO, FinishedErrorDTO } from "@domain/memo/dto";
 import DoneRequestDTO from "./dto/done/done_request";
 
 export default class MemoRepository {
@@ -29,9 +30,27 @@ export default class MemoRepository {
         }
     }
 
-    // async getFinishedMemo(request: FinishedRequestDTO): Promise<MemoEntity[]> {
-
-    // }
+    async getFinishedMemo(request: FinishedRequestDTO): Promise<MemoEntity[]|FinishedErrorDTO> {
+        try {
+            const response = await callAPI(
+                'GET',
+                `/api/memo/done/${request.getUserId}`
+            ) as FinishedResponse[];
+    
+            return response.map((memo) => {
+                return new MemoEntity(
+                    memo.id,
+                    new Date(memo.created_at),
+                    memo.user_id,
+                    memo.title,
+                    memo.done,
+                );
+            });
+        } catch (error: unknown) {
+            if (error instanceof Error) return new FinishedErrorDTO(error.message === '' ? '不明なエラーが発生しました' : error.message);
+            else                        return new FinishedErrorDTO('不明なエラーが発生しました');
+        }
+    }
 
     async createMemo(request: CreateMemoRequestDTO): Promise<MemoEntity> {
         const response = await callAPI(

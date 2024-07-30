@@ -4,22 +4,26 @@ export default class ProductEntity {
         private memo_id: number,
         private name: string,
         private is_done: boolean,
-        private created_at: string,
+        private created_at: Date,
         private latitude: number,
         private longitude: number,
         private price: number,
     ){}
 
-    get getId() {
+    get getId(): number {
         return this.id;
     }
 
-    get getName() {
+    get getName(): string {
         return this.name;
     }
 
-    get getIsDone() {
+    get getIsDone(): boolean {
         return this.is_done;
+    }
+
+    get getCreatedAt(): string {
+        return this.created_at.toLocaleString();
     }
 
     json() {
