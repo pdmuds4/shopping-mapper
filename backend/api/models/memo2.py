@@ -68,7 +68,7 @@ async def createNewMemo(user_id: int, title: str) -> Memo:
                 "title": title,
                 "done": False
             }
-            resp = await client.table("memo").insert(new_memo).select("id, created_at, user_id, title, done").execute()
+            resp = await client.table("memo").insert(new_memo).execute()
             return Memo(**resp.data[0])
     except PostgrestAPIError as e:
         raise HTTPException(status_code=500, detail={"message": "データベースエラーが発生しました。", "error": str(e)})
