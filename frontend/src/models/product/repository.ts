@@ -8,7 +8,7 @@ export default class ProductRepository {
     async createProduct(request: CreateProductRequestDTO) {
         const response = await callAPI(
             'POST',
-            '/api/product/',
+            '/api/product',
             request.json(),
         );
         return response;
