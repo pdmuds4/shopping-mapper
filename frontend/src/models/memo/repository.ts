@@ -55,7 +55,7 @@ export default class MemoRepository {
     async createMemo(request: CreateMemoRequestDTO): Promise<MemoEntity> {
         const response = await callAPI(
             'POST',
-            '/api/memo/',
+            '/api/memo',
             request.json()
         ) as CreateResponse;
         
