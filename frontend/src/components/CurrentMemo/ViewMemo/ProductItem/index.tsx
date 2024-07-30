@@ -15,6 +15,12 @@ const ProductItem: React.FC<{
     const [checked_location, setCheckedLocation] = useState<{latitude: number, longitude: number}>();
 
     const onCheckSaveHandler = useCallback(async () => {
+        navigator.geolocation.getCurrentPosition((position) => setCheckedLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        }));
+        console.log(checked_location);
+        
         if (is_checked) {
             new DoneProductUseCase(
                 new ProductRepository,
@@ -49,10 +55,6 @@ const ProductItem: React.FC<{
     useEffect(()=>{
         const timer = setTimeout(() => {
             if (is_checked !== default_checked) {
-                navigator.geolocation.getCurrentPosition((position) => setCheckedLocation({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                }));
                 setDefaultChecked(is_checked);
                 onCheckSaveHandler();
             }
