@@ -4,6 +4,7 @@ export type NotDoneRequest = {
 
 export type NotDoneResponse = {
     id: number;
+    created_at: string;
     user_id: number;
     title: string;
     done: boolean;

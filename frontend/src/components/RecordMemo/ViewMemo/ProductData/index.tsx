@@ -1,16 +1,18 @@
+import ProductEntity from "@domain/product/entity";
 import { TableRow, TableCell } from "@mui/material";
 
-const ProductData: React.FC = () => {
+const ProductData: React.FC<{
+    product_entity: ProductEntity
+}> = (props) => {
     return (
         <TableRow
-            key={1}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
             <TableCell component="th" scope="row">
-                ああああ
+                {props.product_entity.getName}
             </TableCell>
             <TableCell align="right">
-                {new Date().toLocaleString()}
+                {props.product_entity.getCreatedAt}
             </TableCell>
         </TableRow>
     )

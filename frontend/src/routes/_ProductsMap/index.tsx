@@ -2,8 +2,13 @@ import { useState, useEffect } from "react"
 import { APIProvider, Map } from "@vis.gl/react-google-maps"
 import { Marker } from '@components/ProductsMap';
 import { LoadingDrop } from "@components/ui";
+import GetAllDoneProductsUseCase from "@usecase/getAllDoneProducts";
+import ProductRepository from "@domain/product/repository";
+import { GetDoneRequestDTO } from "@domain/product/dto";
+import ProductEntity from "@domain/product/entity";
 
 const ProductsMap: React.FC = () => {
+    const [done_products, setDoneProducts] = useState<ProductEntity[]>([])
     const [default_center, setDefaultCenter] = useState<{lat: number, lng: number}>()
     const [is_loading, setLoading] = useState(true)
 
@@ -15,7 +20,24 @@ const ProductsMap: React.FC = () => {
                 lng: position.coords.longitude
             })
         })
-        setLoading(false)
+
+        const user_id = localStorage.getItem('user_id')
+        if (user_id) {
+            new GetAllDoneProductsUseCase(
+                new ProductRepository,
+                new GetDoneRequestDTO(parseInt(user_id))
+            ).execute()
+            .then((response) => {
+                console.log(response)
+                setDoneProducts(response)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+        }
     },[])
 
     return (
@@ -34,18 +56,20 @@ const ProductsMap: React.FC = () => {
                 >
                     <Marker position={default_center} isDefaultPosition/>
                     <>
-                        {/* <Marker 
-                            productName={'iPhone 13 Pro Max'}
-                            purchaseDate={new Date()}
-                            position={{lat: 35.646596, lng: 139.7415097}}
-                        /> */}
+                        {done_products.map((product, index) => (
+                            <Marker 
+                                key={index}
+                                productName={product.getName}
+                                purchaseDate={product.getCreatedAt}
+                                position={product.getLocation}
+                            />
+                        ))}
                     </>
                 </Map>) : 
-                <>
-                    <LoadingDrop isOpen={is_loading} />
-                </>
+                <></>
             }
             </APIProvider>
+            <LoadingDrop isOpen={is_loading} />
         </>
     )
 }

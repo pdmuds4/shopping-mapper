@@ -4,3 +4,5 @@ export { default as GetMemoRequestDTO } from './get_memo/get_memo_request';
 
 export { default as DoneRequestDTO } from './done/done_request';
 export { default as UndoneRequestDTO } from './done/undone_request';
+
+export { default as GetDoneRequestDTO } from './get_done/get_done_request';

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 
+import RecordMemo from "@routes/_RecordMemo"
 import { ViewMemo, NotFoundMemo, CreateMemo } from "@components/CurrentMemo"
 import { LoadingDrop } from "@components/ui"
 
@@ -26,7 +27,8 @@ const CurrentMemo: React.FC = () => {
                     if (response instanceof MemoEntity) {
                         setMainComponent(
                             <ViewMemo 
-                                memoEntity={response} 
+                                memoEntity={response}
+                                toMemoList={() => setMainComponent(<RecordMemo />)}
                             />
                         )
                     } else if (response instanceof NotDoneErrorDTO) {
@@ -34,11 +36,11 @@ const CurrentMemo: React.FC = () => {
                             <NotFoundMemo 
                                 onCreateMemo={()=>setMainComponent(
                                     <CreateMemo 
-                                        toViewMemo={(memo_entity)=>
-                                            setMainComponent(
-                                                <ViewMemo 
-                                                    memoEntity={memo_entity}
-                                                />
+                                        toViewMemo={(memo_entity)=>setMainComponent(
+                                            <ViewMemo 
+                                                memoEntity={memo_entity}
+                                                toMemoList={() => setMainComponent(<RecordMemo />)}
+                                            />
                                         )}
                                     />
                                 )} 

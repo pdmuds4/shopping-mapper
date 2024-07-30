@@ -1,6 +1,6 @@
 import { callAPI } from "@utils/callApi";
 import ProductEntity from "./entity";
-import { CreateProductRequestDTO, GetMemoRequestDTO, DoneRequestDTO, UndoneRequestDTO } from "./dto";
+import { CreateProductRequestDTO, GetMemoRequestDTO, DoneRequestDTO, UndoneRequestDTO, GetDoneRequestDTO } from "./dto";
 import { ProductEntityType } from "@domain/product/entityType";
 
 export default class ProductRepository {
@@ -14,9 +14,23 @@ export default class ProductRepository {
         return response;
     }
 
-    // async getAllDone (request: GetDoneRequestDTO)/*: Promise<ProductEntity[]>*/ {
-    //     return;
-    // }
+    async getAllDoneProducts (request: GetDoneRequestDTO): Promise<ProductEntity[]> {
+        const response = await callAPI(
+            'GET',
+            `/api/product/done/user/${request.getUserId}`
+        ) as ProductEntityType[];
+
+        return response.map((product) => new ProductEntity(
+            product.id,
+            product.memo_id,
+            product.name,
+            product.is_done,
+            new Date(product.created_at),
+            product.latitude,
+            product.longitude,
+            product.price,
+        ));
+    }
 
     async getMemoProducts(request: GetMemoRequestDTO): Promise<ProductEntity[]> {
         const response = await callAPI(
@@ -29,7 +43,7 @@ export default class ProductRepository {
             product.memo_id,
             product.name,
             product.is_done,
-            product.created_at,
+            new Date(product.created_at),
             product.latitude,
             product.longitude,
             product.price,

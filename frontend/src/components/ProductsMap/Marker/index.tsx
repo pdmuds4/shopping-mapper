@@ -8,7 +8,7 @@ import { s__markerChip } from './style';
 const Marker: React.FC<{
     position: {lat: number, lng: number},
     productName?: string,
-    purchaseDate?: Date,
+    purchaseDate?: string,
     isDefaultPosition?: boolean
 }> = (props) => {
     const [infowindowOpen, setInfowindowOpen] = useState(false);
@@ -39,7 +39,7 @@ const Marker: React.FC<{
                 >
                     <Chip 
                         sx={s__markerChip}
-                        label={props.purchaseDate?.toLocaleDateString()}
+                        label={props.purchaseDate}
                         variant='outlined'
                     />
                     <Typography variant='h6'>{props.productName}</Typography>
