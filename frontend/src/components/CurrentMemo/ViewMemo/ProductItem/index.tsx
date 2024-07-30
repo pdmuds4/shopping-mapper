@@ -15,19 +15,13 @@ const ProductItem: React.FC<{
     const [checked_location, setCheckedLocation] = useState<{latitude: number, longitude: number}>();
 
     const onCheckSaveHandler = useCallback(async () => {
-        navigator.geolocation.getCurrentPosition((position) => setCheckedLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-        }));
-        console.log(checked_location);
-        
-        if (is_checked) {
+        if (is_checked && checked_location) {
             new DoneProductUseCase(
                 new ProductRepository,
                 new DoneRequestDTO(
                     props.product_entity.getId,
-                    checked_location?.latitude || 0,
-                    checked_location?.longitude || 0,
+                    checked_location.latitude,
+                    checked_location.longitude,
                     0 // [TODO]: 金額の入力機能を追加
                 )
             ).execute()
@@ -49,10 +43,16 @@ const ProductItem: React.FC<{
                 console.error(error);
             })
         }
-    }, [checked_location?.latitude, checked_location?.longitude, is_checked, props.product_entity.getId]);
+    }, [is_checked, checked_location, props.product_entity.getId]);
 
     // 1秒後に変更があれば保存処理を実行
     useEffect(()=>{
+        navigator.geolocation.getCurrentPosition((position) => setCheckedLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        }));
+        console.log(checked_location);
+
         const timer = setTimeout(() => {
             if (is_checked !== default_checked) {
                 setDefaultChecked(is_checked);
@@ -60,7 +60,7 @@ const ProductItem: React.FC<{
             }
         }, 1000);
         return () => clearTimeout(timer);
-    },[is_checked, default_checked, onCheckSaveHandler])
+    },[is_checked, default_checked, onCheckSaveHandler, checked_location]);
 
     return (
         <>
